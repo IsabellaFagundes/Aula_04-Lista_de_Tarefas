@@ -1,20 +1,35 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
+<ion-header>
+  <ion-toolbar color="primary">
     <ion-title>
-      Blank
+      My To-do List
     </ion-title>
+  </ion-toolbar>
+  <ion-toolbar color="light">
+    <ion-item color="light">
+      <ion-label position="floating">Add Task</ion-label>  <!--Nome do campo de digitação-->
+      <ion-input type="text" [(ngModel)]="newTaskName"></ion-input> 
+      <!--campo de digitação para inserir as novas tarefas-->
+    </ion-item>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="addTask()">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <!--Botão que adiciona a tarefa à lista, chama a função criada no Ts-->
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-list *ngIf="tasks.length > 0; else emptyTasks"> <!--Se o tamanho da "lista" de tarefas for maior que 0, ou seja não estiver vazia-->
+    <ion-item *ngFor="let task of tasks">
+      <ion-label>{{task.name}}</ion-label> <!--Cria um campo com o nome da tarefa (inserido no input)-->
+      <ion-checkbox slot="start" [(ngModel)]="task.done"></ion-checkbox> <!--Cria um check na frente da tarefa, para marcar se ela foi realzida ou não-->
+    </ion-item>
+  </ion-list>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <ng-template #emptyTasks> <!--Se o tamanho da "lista" de tarefas não for maior que 0, ou seja, se ela estiver vazia-->
+    <ion-text color="medium" class="ion-text-center">
+      <p>Add tasks using the input above</p> <!--Mostra esse texto-->
+    </ion-text>
+  </ng-template>
 </ion-content>
